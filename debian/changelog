@@ -1,5 +1,9 @@
 pristine-tar (1.14) unstable; urgency=low
 
+  * Re-structure repository for CPAN compatibility
+
+pristine-tar (1.14) unstable; urgency=low
+
   * Add support for gzip --rsyncable output produced by gzip 1.4.
     This differs from prior --rsyncable output, which was made by a Debian
     specific patch and used a different rsync window size, and reset

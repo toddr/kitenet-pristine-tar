@@ -6,41 +6,37 @@ use ExtUtils::MakeMaker;
 # Add a few more targets.
 sub MY::postamble {
 q{
-all:: extra_build
-clean:: extra_clean
-install:: extra_install
-pure_install:: extra_install
-
-extra_build: zgz/zgz pristine-tar.spec
-	pod2man -c pristine-tar pristine-tar > pristine-tar.1
-	pod2man -c pristine-gz  pristine-gz  > pristine-gz.1
-	pod2man -c pristine-bz2 pristine-bz2 > pristine-bz2.1
-	pod2man -c zgz zgz/zgz.pod > zgz.1
+all:: zgz/zgz
 
 ZGZ_SOURCES = zgz/zgz.c zgz/gzip/*.c zgz/old-bzip2/*.c
 zgz/zgz: $(ZGZ_SOURCES)
 	gcc -Wall -O2 -o $@ $(ZGZ_SOURCES) -lz
-
-extra_install:
-	install -d $(DESTDIR)/usr/bin
-	install -d $(DESTDIR)/usr/share/man/man1
-	install pristine-tar pristine-gz pristine-bz2 zgz/zgz $(DESTDIR)/usr/bin
-	install -m 0644 *.1 $(DESTDIR)/usr/share/man/man1
-
-extra_clean: pristine-tar.spec
-	rm -f zgz/zgz *.1
-
-pristine-tar.spec:
-	sed -i "s/Version:.*/Version: $$(perl -e '$$_=<>;print m/\((.*?)\)/'<debian/changelog)/" pristine-tar.spec
-
-.PHONY: pristine-tar.spec
 }
 }
 
 WriteMakefile(
-	NAME		=> 'Pristine',
-	PREFIX		=> "/usr/local",
-	MAN1PODS	=> {},
-	MAN3PODS	=> {},
-	PMLIBDIRS	=> ["Pristine"],
+	NAME		 => 'Pristine::Tar',
+    AUTHOR       => 'Joey Hess <joey@kitenet.net>',
+    VERSION_FROM => 'pristine-tar',
+    ABSTRACT     => 'regenerate a pristine upstream tarball using only a small binary delta file and a copy of the source which can be a revision control checkout',
+    ($ExtUtils::MakeMaker::VERSION >= 6.3002 ? ('LICENSE'        => 'GPLv2', ) : ()),
+    EXE_FILES    => [ 'pristine-tar', 'pristine-bz2', 'pristine-gz', 'zgz/zgz' ],
+    dist         => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    clean        => { FILES => 'zgz/zgz Pristine-Tar-*' },
+    META_MERGE  => {
+        recommends => {
+            'Test::Pod' => 1.14,
+        },
+        build_requires => {
+            'Test::More' => 0,  # For testing
+            'Test::NoWarnings' => 0,  # For testing
+        },
+        resources => {
+            license => 'GPLv2',
+            homepage => 'http://kitenet.net/~joey/code/pristine-tar/',
+#            bugtracker => '',
+            repository => 'http://git.kitenet.net/?p=pristine-tar.git',
+#            MailingList => '',
+        },
+    },
 );

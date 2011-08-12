@@ -4,6 +4,14 @@
 
 pristine-tar - regenerate pristine tarballs
 
+=head1 VERSION
+
+Version 1.15
+
+=cut
+
+our $VERSION = '1.15';
+
 =head1 SYNOPSIS
 
 B<pristine-tar> [-vdk] gendelta I<tarball> I<delta>
