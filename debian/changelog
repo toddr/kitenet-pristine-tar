@@ -1,3 +1,9 @@
+pristine-tar (1.17) stable; urgency=mediam
+  * Don't elide directory name if that directory exists in the source.
+
+pristine-tar (1.16) unstable; urgency=low
+  * Branch confusion fixup
+
 pristine-tar (1.14) unstable; urgency=low
 
   * Re-structure repository for CPAN compatibility

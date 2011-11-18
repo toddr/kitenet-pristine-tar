@@ -14,7 +14,7 @@ our @EXPORT = qw(error message debug vprint doit try_doit doit_redir
 	tempdir dispatch
 	$verbose $debug $keep);
 
-our $VERSION = '1.16';
+our $VERSION = '1.17';
 
 our $verbose=0;
 our $debug=0;

@@ -6,12 +6,12 @@ pristine-tar - regenerate pristine tarballs
 
 =head1 VERSION
 
-Version 1.16
+Version 1.17
 
 =cut
 
 # ALSO update lib/Pristine/Tar.pm
-our $VERSION = '1.16';
+our $VERSION = '1.17';
 
 =head1 SYNOPSIS
 
@@ -257,9 +257,15 @@ sub recreatetarball {
 	}
 		
 	if (length $subdir) {
-		debug("subdir is $subdir");
-		doit("mkdir", "$tempdir/workdir");
-		$subdir="/$subdir";
+		if ( -e "$source/$subdir" ) {
+			debug("subdir $subdir exists");
+			$subdir='';
+		}
+		else {
+			debug("subdir is $subdir");
+			doit("mkdir", "$tempdir/workdir");
+			$subdir="/$subdir";
+		}
 	}
 
 	if (! $options{clobber_source}) {
