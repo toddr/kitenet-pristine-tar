@@ -248,9 +248,15 @@ sub recreatetarball {
 	}
 		
 	if (length $subdir) {
-		debug("subdir is $subdir");
-		doit("mkdir", "$tempdir/workdir");
-		$subdir="/$subdir";
+		if ( -e "$source/$subdir" ) {
+			debug("subdir $subdir exists");
+			$subdir='';
+		}
+		else {
+			debug("subdir is $subdir");
+			doit("mkdir", "$tempdir/workdir");
+			$subdir="/$subdir";
+		}
 	}
 
 	if (! $options{clobber_source}) {
