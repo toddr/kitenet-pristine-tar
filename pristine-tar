@@ -10,6 +10,7 @@ Version 1.16
 
 =cut
 
+# ALSO update lib/Pristine/Tar.pm
 our $VERSION = '1.16';
 
 =head1 SYNOPSIS
