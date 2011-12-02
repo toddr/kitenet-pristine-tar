@@ -23,6 +23,10 @@ WriteMakefile(
     EXE_FILES    => [ 'pristine-tar', 'pristine-bz2', 'pristine-gz', 'zgz/zgz' ],
     dist         => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean        => { FILES => 'zgz/zgz Pristine-Tar-*' },
+    BUILD_REQUIRES => {
+        'Test::More' => 0,  # For testing                                                                                                                                                           
+        'Test::NoWarnings' => 0,  # For testing         
+    },
     META_MERGE  => {
         recommends => {
             'Test::Pod' => 1.14,
